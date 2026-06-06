@@ -86,8 +86,9 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-weight:4
 .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:44px}
 .cell{position:relative;overflow:hidden;border-radius:18px;background:linear-gradient(135deg,var(--peach-wash),var(--bg-2));
   display:flex;align-items:flex-end;padding:18px;box-shadow:0 20px 40px -28px rgba(216,126,84,.45)}
-.cell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.cell .cap{position:relative;z-index:1;font-family:var(--disp);font-style:italic;font-size:1rem;color:var(--ink)}
+.cell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+.cell .grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,5,2,.72) 0%,rgba(10,5,2,.18) 50%,transparent 100%);z-index:0;pointer-events:none}
+.cell .cap{position:relative;z-index:1;font-family:var(--disp);font-style:italic;font-size:.95rem;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.8),0 2px 20px rgba(0,0,0,.5);line-height:1.35}
 .cell .tag{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--peach-dp);opacity:.7}
 .cell.c-a{grid-column:span 4;min-height:320px}
 .cell.c-b{grid-column:span 2;min-height:320px}
@@ -390,7 +391,7 @@ window.PG = {
   /* STORY bento */
   const cls=['c-a','c-b','c-c','c-d'];
   const cells=D.story.photos.map((p,i)=>{
-    const inner=p.src?`<img src="${p.src}" alt="" loading="lazy"><span class="cap">${p.caption}</span>`:`<span class="tag">add photo</span><span class="cap">${p.caption}</span>`;
+    const inner=p.src?`<img src="${p.src}" alt="" loading="lazy"><div class="grad"></div><span class="cap">${p.caption}</span>`:`<span class="tag">add photo</span><span class="cap">${p.caption}</span>`;
     return `<div class="cell ${cls[i]||'c-d'} r">${inner}</div>`;}).join('');
   root.appendChild(sec(null,null,
     `<div class="kicker"><span class="num">${D.story.n}</span><span>${D.story.label}</span></div>
