@@ -421,7 +421,7 @@ window.PG = {
     `<div class="kicker"><span class="num">${D.voices.n}</span><span>${D.voices.label}</span></div>
      <h2 class="heading r">From everyone who <em>loves you</em>.</h2>
      <div class="comp-head r"><span class="comp-label">The Compilation</span><span class="comp-title">${comp.title}</span></div>
-     <div class="video r">${compMedia}</div>
+     <div class="story-video r" style="margin-top:20px">${compMedia}</div>
      <div class="voices">${D.voices.cards.map(c=>{
         let media=c.videoId?`<div class="video">${`<iframe src="https://www.youtube.com/embed/${c.videoId}" allowfullscreen></iframe>`}</div>`:c.audio?`<audio controls src="${c.audio}"></audio>`:`<div class="vnote">${c.note}</div>`;
         return `<div class="vcard r"><div class="av">${c.initial}</div><div class="vn">${c.name}</div>${media}</div>`;}).join('')}</div>`));
