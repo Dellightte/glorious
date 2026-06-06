@@ -90,10 +90,10 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-weight:4
 .cell .grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,5,2,.72) 0%,rgba(10,5,2,.18) 50%,transparent 100%);z-index:0;pointer-events:none}
 .cell .cap{position:relative;z-index:1;font-family:var(--disp);font-style:italic;font-size:.95rem;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.8),0 2px 20px rgba(0,0,0,.5);line-height:1.35}
 .cell .tag{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--peach-dp);opacity:.7}
-.cell.c-a{grid-column:span 4;min-height:320px}
-.cell.c-b{grid-column:span 2;min-height:320px}
-.cell.c-c{grid-column:span 2;min-height:240px}
-.cell.c-d{grid-column:span 4;min-height:240px}
+.cell.c-a{grid-column:span 4;min-height:360px}
+.cell.c-b{grid-column:span 2;min-height:360px}
+.cell.c-c{grid-column:span 2;min-height:340px}
+.cell.c-d{grid-column:span 4;min-height:340px}
 .cell.c-v{grid-column:span 6;aspect-ratio:16/9;padding:0;align-items:center;justify-content:center}
 
 /* AFFIRMATIONS — cards */
@@ -237,12 +237,12 @@ window.PG = {
     n: "02",
     label: "Our Story",
     heading: "The moments that made us.",
-    // ← Bolu: set `src` to your photo path (e.g. "photos/first.jpg"); leave "" for a placeholder.
+    // ← Bolu: set `src` to your photo path. `pos` controls crop focus (e.g. "center 30%", "center bottom").
     photos: [
-      { src: "photos/photo-1-friends.jpg", caption: "Ife — just best friends, before anything else." },
-      { src: "photos/photo-2-ibeju.jpg", caption: "Ibeju-Lekki — somewhere between what we were and what we'd become." },
-      { src: "photos/photo-3-ilesa-start.jpg", caption: "Ilesa in — when we came in as lovers." },
-      { src: "photos/photo-4-ilesa-end.jpg", caption: "Ilesa out — and we left still in love." }
+      { src: "photos/photo-1-friends.jpg", caption: "Ife — just best friends, before anything else.", pos: "center 22%" },
+      { src: "photos/photo-2-ibeju.jpg", caption: "Ibeju-Lekki — somewhere between what we were and what we'd become.", pos: "center 38%" },
+      { src: "photos/photo-3-ilesa-start.jpg", caption: "Ilesa in — when we came in as lovers.", pos: "center 80%" },
+      { src: "photos/photo-4-ilesa-end.jpg", caption: "Ilesa out — and we left still in love.", pos: "center 68%" }
     ],
     videoNote: "A clip from our story",
     videoId: ""    // ← YouTube unlisted ID
@@ -391,7 +391,7 @@ window.PG = {
   /* STORY bento */
   const cls=['c-a','c-b','c-c','c-d'];
   const cells=D.story.photos.map((p,i)=>{
-    const inner=p.src?`<img src="${p.src}" alt="" loading="lazy"><div class="grad"></div><span class="cap">${p.caption}</span>`:`<span class="tag">add photo</span><span class="cap">${p.caption}</span>`;
+    const inner=p.src?`<img src="${p.src}" alt="" loading="lazy" style="object-position:${p.pos||'center center'}"><div class="grad"></div><span class="cap">${p.caption}</span>`:`<span class="tag">add photo</span><span class="cap">${p.caption}</span>`;
     return `<div class="cell ${cls[i]||'c-d'} r">${inner}</div>`;}).join('');
   root.appendChild(sec(null,null,
     `<div class="kicker"><span class="num">${D.story.n}</span><span>${D.story.label}</span></div>
