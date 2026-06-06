@@ -307,9 +307,9 @@ window.PG = {
     },
     // ← Bolu: set name + initial, and either videoId (YouTube) or audio (path to .mp3)
     cards: [
-      { name: "A message from a loved one", initial: "♡", note: "Her Dad — add audio", videoId: "", audio: "" },
-      { name: "A message from a loved one", initial: "♡", note: "Her Mum — add audio", videoId: "", audio: "" },
-      { name: "A message from a loved one", initial: "♡", note: "Her Sibling — add audio", videoId: "", audio: "" },
+      { name: "Your Dad", initial: "D", note: "Her Dad — add audio", videoId: "", audio: "" },
+      { name: "Your Mum", initial: "M", note: "Her Mum — add audio", videoId: "", audio: "" },
+      { name: "Your Sister", initial: "S", note: "Her Sibling — add audio", videoId: "", audio: "" },
       { name: "Bolu's Dad", initial: "D", note: "A word from Dad", videoId: "", audio: "audio/audio-dad.m4a" },
       { name: "A message from a loved one", initial: "♡", note: "Add a YouTube clip or voice note", videoId: "", audio: "" },
       { name: "A message from a loved one", initial: "♡", note: "Add a YouTube clip or voice note", videoId: "", audio: "" }
@@ -425,7 +425,7 @@ window.PG = {
      <div class="comp-head r"><span class="comp-label">The Compilation</span><span class="comp-title">${comp.title}</span></div>
      <div class="story-video r" style="margin-top:20px">${compMedia}</div>
      <div class="voices">${D.voices.cards.map(c=>{
-        let media=c.videoId?`<div class="video">${`<iframe src="https://www.youtube.com/embed/${c.videoId}" allowfullscreen></iframe>`}</div>`:c.audio?`<audio controls src="${c.audio}"></audio>`:`<div class="vnote">${c.note}</div>`;
+        let media=c.videoId?`<div class="video"><iframe src="https://www.youtube.com/embed/${c.videoId}" allowfullscreen></iframe></div>`:c.audio?`<audio controls style="width:100%;margin-top:10px;border-radius:8px"><source src="${c.audio}" type="audio/mp4">Your browser does not support audio playback.</audio>`:`<div class="vnote">${c.note}</div>`;
         return `<div class="vcard r"><div class="av">${c.initial}</div><div class="vn">${c.name}</div>${media}</div>`;}).join('')}</div>`));
 
   /* MOMENTS */
