@@ -82,19 +82,20 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-weight:4
 .poem{font-family:var(--disp);font-weight:340;font-size:clamp(1.4rem,4.6vw,2.1rem);line-height:1.5;letter-spacing:-.01em;color:var(--ink)}
 .poem .rl{display:block}
 
-/* BENTO */
-.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:44px}
-.cell{position:relative;overflow:hidden;border-radius:18px;background:linear-gradient(135deg,var(--peach-wash),var(--bg-2));
-  display:flex;align-items:flex-end;padding:18px;box-shadow:0 20px 40px -28px rgba(216,126,84,.45)}
-.cell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
-.cell .grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,5,2,.72) 0%,rgba(10,5,2,.18) 50%,transparent 100%);z-index:0;pointer-events:none}
-.cell .cap{position:relative;z-index:1;font-family:var(--disp);font-style:italic;font-size:.95rem;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.8),0 2px 20px rgba(0,0,0,.5);line-height:1.35}
+/* BENTO — masonry, photos keep natural shape */
+.bento{columns:2;column-gap:16px;margin-top:44px}
+.cell{break-inside:avoid;margin-bottom:16px;position:relative;overflow:hidden;border-radius:18px;
+  box-shadow:0 20px 40px -28px rgba(216,126,84,.45);display:block;
+  background:linear-gradient(135deg,var(--peach-wash),var(--bg-2))}
+.cell img{width:100%;height:auto;display:block}
+.cell .grad{position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(to top,rgba(10,5,2,.78) 0%,rgba(10,5,2,.15) 60%,transparent 100%);z-index:0;pointer-events:none}
+.cell .cap{position:absolute;left:18px;right:18px;bottom:16px;z-index:1;font-family:var(--disp);font-style:italic;font-size:.95rem;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.85),0 2px 20px rgba(0,0,0,.5);line-height:1.35}
+.cell.placeholder{min-height:280px;display:flex;align-items:flex-end;padding:18px}
 .cell .tag{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--peach-dp);opacity:.7}
-.cell.c-a{grid-column:span 4;min-height:360px}
-.cell.c-b{grid-column:span 2;min-height:360px}
-.cell.c-c{grid-column:span 2;min-height:340px}
-.cell.c-d{grid-column:span 4;min-height:340px}
-.cell.c-v{grid-column:span 6;aspect-ratio:16/9;padding:0;align-items:center;justify-content:center}
+.cell.placeholder .cap{position:relative;left:0;right:0;bottom:0;color:var(--ink);text-shadow:none}
+.story-video{margin-top:16px;width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;border-radius:18px;
+  box-shadow:0 20px 40px -28px rgba(216,126,84,.45);background:linear-gradient(140deg,var(--peach-wash),var(--bg-2))}
+.story-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
 /* AFFIRMATIONS — cards */
 .aff-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:44px}
@@ -165,7 +166,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-weight:4
 @keyframes scan{0%,100%{transform:scaleX(.4);opacity:.5}50%{transform:scaleX(1);opacity:1}}
 @keyframes breathe{0%,100%{transform:translate(0,0) scale(1);opacity:.7}50%{transform:translate(-30px,20px) scale(1.1);opacity:1}}
 
-@media(max-width:680px){.voices{grid-template-columns:1fr}.cell.c-a,.cell.c-b,.cell.c-c,.cell.c-d{grid-column:span 6;min-height:220px}}
+@media(max-width:680px){.voices{grid-template-columns:1fr}.bento{columns:1}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}.r,.rl{opacity:1!important;transform:none!important}}
 
 </style>
@@ -237,12 +238,12 @@ window.PG = {
     n: "02",
     label: "Our Story",
     heading: "The moments that made us.",
-    // ← Bolu: set `src` to your photo path. `pos` controls crop focus (e.g. "center 30%", "center bottom").
+    // ← Bolu: set `src` to your photo path. Photos display at their natural shape — no cropping.
     photos: [
-      { src: "photos/photo-1-friends.jpg", caption: "Ife — just best friends, before anything else.", pos: "center 22%" },
-      { src: "photos/photo-2-ibeju.jpg", caption: "Ibeju-Lekki — somewhere between what we were and what we'd become.", pos: "center 38%" },
-      { src: "photos/photo-3-ilesa-start.jpg", caption: "Ilesa in — when we came in as lovers.", pos: "center 80%" },
-      { src: "photos/photo-4-ilesa-end.jpg", caption: "Ilesa out — and we left still in love.", pos: "center 68%" }
+      { src: "photos/photo-1-friends.jpg", caption: "Ife — just best friends, before anything else." },
+      { src: "photos/photo-2-ibeju.jpg", caption: "Ibeju-Lekki — somewhere between what we were and what we'd become." },
+      { src: "photos/photo-3-ilesa-start.jpg", caption: "Ilesa in — when we came in as lovers." },
+      { src: "photos/photo-4-ilesa-end.jpg", caption: "Ilesa out — and we left still in love." }
     ],
     videoNote: "A clip from our story",
     videoId: ""    // ← YouTube unlisted ID
@@ -388,17 +389,16 @@ window.PG = {
        <div class="poem">${D.fromMe.poem.map((l,i)=>`<span class="rl" style="transition-delay:${Math.min(i*35,560)}ms">${l}</span>`).join('')}</div>
      </div>`));
 
-  /* STORY bento */
-  const cls=['c-a','c-b','c-c','c-d'];
+  /* STORY masonry */
   const cells=D.story.photos.map((p,i)=>{
-    const inner=p.src?`<img src="${p.src}" alt="" loading="lazy" style="object-position:${p.pos||'center center'}"><div class="grad"></div><span class="cap">${p.caption}</span>`:`<span class="tag">add photo</span><span class="cap">${p.caption}</span>`;
-    return `<div class="cell ${cls[i]||'c-d'} r">${inner}</div>`;}).join('');
+    const inner=p.src?`<img src="${p.src}" alt="" loading="lazy"><div class="grad"></div><span class="cap">${p.caption}</span>`:`<span class="tag">add photo</span><span class="cap">${p.caption}</span>`;
+    return `<div class="cell r${p.src?'':' placeholder'}">${inner}</div>`;}).join('');
+  const storyVid=D.story.videoId?`<div class="story-video r"><iframe src="https://www.youtube.com/embed/${D.story.videoId}" allowfullscreen></iframe></div>`:`<div class="story-video r"><div class="vph"><div class="ring"></div><p>${D.story.videoNote}</p></div></div>`;
   root.appendChild(sec(null,null,
     `<div class="kicker"><span class="num">${D.story.n}</span><span>${D.story.label}</span></div>
      <h2 class="heading r">The moments that <em>made us</em>.</h2>
-     <div class="bento">${cells}
-       <div class="cell c-v r">${D.story.videoId?`<iframe style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:18px" src="https://www.youtube.com/embed/${D.story.videoId}" allowfullscreen></iframe>`:`<div class="vph" style="border-radius:18px"><div class="ring"></div><p>${D.story.videoNote}</p></div>`}</div>
-     </div>`));
+     <div class="bento">${cells}</div>
+     ${storyVid}`));
 
   /* AFFIRMATIONS */
   root.appendChild(sec(null,null,
